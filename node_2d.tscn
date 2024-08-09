@@ -1,0 +1,94 @@
+[gd_scene load_steps=11 format=3 uid="uid://buy3xaodn8rrh"]
+
+[ext_resource type="Script" path="res://Area2D.gd" id="1_0p3os"]
+[ext_resource type="Script" path="res://HandleCookies.gd" id="1_vwwao"]
+[ext_resource type="Script" path="res://Pointer.gd" id="1_yyeb4"]
+[ext_resource type="Script" path="res://CollisionShape2D.gd" id="2_ht6go"]
+[ext_resource type="Script" path="res://Gramby.gd" id="3_f7ix5"]
+[ext_resource type="Script" path="res://Farm.gd" id="4_m4jwk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_306xj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g3h6e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cude2"]
+radius = 199.04
+
+[sub_resource type="SphereMesh" id="SphereMesh_8st4c"]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(231, 132)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_306xj")
+
+[node name="HandleCookies" type="Node" parent="."]
+script = ExtResource("1_vwwao")
+
+[node name="Label" type="Label" parent="HandleCookies"]
+offset_left = 296.0
+offset_top = 17.0
+offset_right = 793.0
+offset_bottom = 143.0
+text = "cookies: 0"
+label_settings = SubResource("LabelSettings_g3h6e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pointer" type="Button" parent="HandleCookies"]
+offset_left = 55.0
+offset_top = 146.0
+offset_right = 200.0
+offset_bottom = 177.0
+text = "pointer: 5 cookies"
+script = ExtResource("1_yyeb4")
+
+[node name="PointerCount" type="Label" parent="HandleCookies/Pointer"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 148.0
+offset_bottom = 77.0
+text = "Current: 0"
+
+[node name="Gramby" type="Button" parent="HandleCookies"]
+offset_left = 55.0
+offset_top = 229.0
+offset_right = 200.0
+offset_bottom = 260.0
+text = "gramby: 100 cookies"
+script = ExtResource("3_f7ix5")
+
+[node name="GrambyCount" type="Label" parent="HandleCookies/Gramby"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 148.0
+offset_bottom = 77.0
+text = "Current: 0"
+
+[node name="Farm" type="Button" parent="HandleCookies"]
+offset_left = 53.0
+offset_top = 311.0
+offset_right = 219.0
+offset_bottom = 342.0
+text = "farm: 500 cookies"
+script = ExtResource("4_m4jwk")
+
+[node name="FarmCount" type="Label" parent="HandleCookies/Farm"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 148.0
+offset_bottom = 77.0
+text = "Current: 0"
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_0p3os")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(316, 194)
+shape = SubResource("CircleShape2D_cude2")
+script = ExtResource("2_ht6go")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Area2D/CollisionShape2D"]
+position = Vector2(1.00006, 4.00006)
+scale = Vector2(-408.18, -402.599)
+mesh = SubResource("SphereMesh_8st4c")
