@@ -17,9 +17,6 @@ func wait(seconds: float):
 func getcookies():
 	return handlecookies.cookies
 
-func updatecookies(value):
-	handlecookies.cookies = value
-	display.text = "cookies: " + str(value)
 
 
 func _ready():
@@ -29,7 +26,7 @@ func haspointer():
 	while (GrambyAmt > 0):
 		var cookies = getcookies()
 		cookies += (GrambyAmt * (GrambyGenAmt))
-		updatecookies(cookies)
+		handlecookies.cookies = cookies
 		await wait(1)
 
 
@@ -39,10 +36,10 @@ func onpurchase():
 	if (currentcc >= Grambycost):
 		var cost = getcookies()
 		cost -= Grambycost
-		updatecookies(cost)
+		handlecookies.cookies = cost
 		GrambyAmt += 1
 		GrambyCount.text = "Current: " + str(GrambyAmt) + "\nGenerating " + str(GrambyAmt * GrambyGenAmt) + " cookies per second"
-		Grambycost += 5
+		Grambycost += (Grambycost / 2) + GrambyAmt
 		self.text = "gramby: " + str(Grambycost) + " cookies"
 		if (isfirstpurchase):
 			isfirstpurchase = false

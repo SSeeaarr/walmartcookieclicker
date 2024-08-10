@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://buy3xaodn8rrh"]
+[gd_scene load_steps=10 format=3 uid="uid://buy3xaodn8rrh"]
 
 [ext_resource type="Script" path="res://Area2D.gd" id="1_0p3os"]
 [ext_resource type="Script" path="res://HandleCookies.gd" id="1_vwwao"]
 [ext_resource type="Script" path="res://Pointer.gd" id="1_yyeb4"]
-[ext_resource type="Script" path="res://CollisionShape2D.gd" id="2_ht6go"]
 [ext_resource type="Script" path="res://Gramby.gd" id="3_f7ix5"]
 [ext_resource type="Script" path="res://Farm.gd" id="4_m4jwk"]
 
@@ -22,7 +21,7 @@ position = Vector2(231, 132)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_306xj")
 
-[node name="HandleCookies" type="Node" parent="."]
+[node name="HandleCookies" type="Node" parent="." groups=["Persist"]]
 script = ExtResource("1_vwwao")
 
 [node name="Label" type="Label" parent="HandleCookies"]
@@ -86,7 +85,6 @@ script = ExtResource("1_0p3os")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(316, 194)
 shape = SubResource("CircleShape2D_cude2")
-script = ExtResource("2_ht6go")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Area2D/CollisionShape2D"]
 position = Vector2(1.00006, 4.00006)

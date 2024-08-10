@@ -17,9 +17,6 @@ func wait(seconds: float):
 func getcookies():
 	return handlecookies.cookies
 
-func updatecookies(value):
-	handlecookies.cookies = value
-	display.text = "cookies: " + str(value)
 
 
 func _ready():
@@ -29,7 +26,7 @@ func haspointer():
 	while (FarmAmt > 0):
 		var cookies = getcookies()
 		cookies += (FarmAmt * (FarmGenAmt))
-		updatecookies(cookies)
+		handlecookies.cookies = cookies
 		await wait(1)
 
 
@@ -39,10 +36,10 @@ func onpurchase():
 	if (currentcc >= Farmcost):
 		var cost = getcookies()
 		cost -= Farmcost
-		updatecookies(cost)
+		handlecookies.cookies = cost
 		FarmAmt += 1
 		FarmCount.text = "Current: " + str(FarmAmt) + "\nGenerating " + str(FarmAmt * FarmGenAmt) + " cookies per second"
-		Farmcost += 5
+		Farmcost += (Farmcost / 2) + FarmAmt
 		self.text = "farm: " + str(Farmcost) + " cookies"
 		if (isfirstpurchase):
 			isfirstpurchase = false

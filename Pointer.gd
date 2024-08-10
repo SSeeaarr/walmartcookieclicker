@@ -9,7 +9,7 @@ var isfirstpurchase = true
 
 var PointerAmt = 0
 var Pointercost = 5
-var PointerGenAmt = 0.1
+var PointerGenAmt = 0.2
 
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
@@ -17,19 +17,15 @@ func wait(seconds: float):
 func getcookies():
 	return handlecookies.cookies
 
-func updatecookies(value):
-	handlecookies.cookies = value
-	display.text = "cookies: " + str(value)
-
-
 func _ready():
 	Pointer.pressed.connect(self.onpurchase)
+	
 
 func haspointer():
 	while (PointerAmt > 0):
 		var cookies = getcookies()
 		cookies += (PointerAmt * (PointerGenAmt))
-		updatecookies(cookies)
+		handlecookies.cookies = cookies
 		await wait(1)
 
 
@@ -39,10 +35,10 @@ func onpurchase():
 	if (currentcc >= Pointercost):
 		var cost = getcookies()
 		cost -= Pointercost
-		updatecookies(cost)
+		handlecookies.cookies = cost
 		PointerAmt += 1
 		pointercount.text = "Current: " + str(PointerAmt) + "\nGenerating " + str(PointerAmt * PointerGenAmt) + " cookies per second"
-		Pointercost += 5
+		Pointercost += (Pointercost / 2) + PointerAmt
 		self.text = "pointer: " + str(Pointercost) + " cookies"
 		if (isfirstpurchase):
 			isfirstpurchase = false
