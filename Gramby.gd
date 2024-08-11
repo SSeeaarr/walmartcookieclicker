@@ -3,7 +3,7 @@ extends Button
 @onready var Gramby = $"/root/Node2D/HandleCookies/Gramby"
 @onready var handlecookies = $"/root/Node2D/HandleCookies"
 @onready var display = $"/root/Node2D/HandleCookies/Label"
-@onready var GrambyCount = $"/root/Node2D/HandleCookies/Gramby/GrambyCount"
+@onready var grambycount = $"/root/Node2D/HandleCookies/Gramby/GrambyCount"
 
 var isfirstpurchase = true
 
@@ -17,8 +17,6 @@ func wait(seconds: float):
 func getcookies():
 	return handlecookies.cookies
 
-
-
 func _ready():
 	Gramby.pressed.connect(self.onpurchase)
 
@@ -29,7 +27,11 @@ func haspointer():
 		handlecookies.cookies = cookies
 		await wait(1)
 
+func updatecounttext():
+	grambycount.text = "Current: " + str(GrambyAmt) + "\nGenerating " + str(GrambyAmt * GrambyGenAmt) + " cookies per second"
 
+func updateselftext():
+	self.text = "gramby: " + str(Grambycost) + " cookies"
 
 func onpurchase():
 	var currentcc = getcookies()
@@ -38,9 +40,9 @@ func onpurchase():
 		cost -= Grambycost
 		handlecookies.cookies = cost
 		GrambyAmt += 1
-		GrambyCount.text = "Current: " + str(GrambyAmt) + "\nGenerating " + str(GrambyAmt * GrambyGenAmt) + " cookies per second"
-		Grambycost += (Grambycost / 2) + GrambyAmt
-		self.text = "gramby: " + str(Grambycost) + " cookies"
-		if (isfirstpurchase):
+		updatecounttext()
+		Grambycost += (Grambycost / GrambyAmt) + GrambyAmt
+		updateselftext()
+		if (isfirstpurchase) and (GrambyAmt <= 1):
 			isfirstpurchase = false
 			haspointer()

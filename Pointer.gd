@@ -19,7 +19,6 @@ func getcookies():
 
 func _ready():
 	Pointer.pressed.connect(self.onpurchase)
-	
 
 func haspointer():
 	while (PointerAmt > 0):
@@ -28,7 +27,11 @@ func haspointer():
 		handlecookies.cookies = cookies
 		await wait(1)
 
+func updatecounttext():
+	pointercount.text = "Current: " + str(PointerAmt) + "\nGenerating " + str(PointerAmt * PointerGenAmt) + " cookies per second"
 
+func updateselftext():
+	self.text = "pointer: " + str(Pointercost) + " cookies"
 
 func onpurchase():
 	var currentcc = getcookies()
@@ -37,9 +40,9 @@ func onpurchase():
 		cost -= Pointercost
 		handlecookies.cookies = cost
 		PointerAmt += 1
-		pointercount.text = "Current: " + str(PointerAmt) + "\nGenerating " + str(PointerAmt * PointerGenAmt) + " cookies per second"
-		Pointercost += (Pointercost / 2) + PointerAmt
-		self.text = "pointer: " + str(Pointercost) + " cookies"
-		if (isfirstpurchase):
+		updatecounttext()
+		Pointercost += (Pointercost / PointerAmt) + PointerAmt
+		updateselftext()
+		if (isfirstpurchase) and (PointerAmt <= 1):
 			isfirstpurchase = false
 			haspointer()
